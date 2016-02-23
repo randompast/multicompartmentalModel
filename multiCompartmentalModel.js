@@ -5,7 +5,7 @@ document.title = "Multicompartmental Model - Chapter 6 (Abbot)"
 var fit = require('canvas-fit')
   var canvas = document.body.appendChild(document.createElement('canvas'))
   window.addEventListener('resize', fit(canvas), false)
-  var ctx = canvas.getContext('2d')
+  ctx = canvas.getContext('2d')
 var GUI = require("dat-gui")
 var gui = new GUI.gui.GUI()
 
@@ -16,9 +16,9 @@ for (var key in a){
   gui.add(a, key, 0, Math.abs(a[key]*mult))
   atmp[key] = a[key]
 }
-a.count = 6
-a.isel = 3//5
-a.jsel = 5//10
+a.count = 20//6//10
+a.isel = 11//3//5
+a.jsel = 20//5//10
 
 var r = (max) =>  Math.floor(Math.random()*max)
 var transpose = require("./transpose.js")
@@ -104,6 +104,7 @@ var init = function(a, drawBool, iHardBool, jHardBool){
   IeTrans = transpose(Ie)
   t = transpose(times)
   if (drawBool){
+        // (canvas, ctx, posArr, colors, connections, rSoma, rDendrite, isel, jsel){
     draw(canvas, ctx, posArr, colors, connections, a.rSoma, a.rDendrite, isel, jsel)
 
     drawArr(canvas, ctx, IeTrans[isel], "rgba(100,255,150, 0.6)", 10, 5)

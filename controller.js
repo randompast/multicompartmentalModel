@@ -21,9 +21,9 @@ a = {}
   a.lDendrite = 1
   //membrane thickness ~10nm
 
-  a.isel = a.count/2 + 1
+  a.isel = a.count
   a.iBool = true
-  a.jsel = a.count/2
+  a.jsel = a.count
   a.jBool = true
   a.jshift = 300
 
