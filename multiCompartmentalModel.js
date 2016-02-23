@@ -16,9 +16,11 @@ for (var key in a){
   gui.add(a, key, 0, Math.abs(a[key]*mult))
   atmp[key] = a[key]
 }
-a.count = 20//6//10
-a.isel = 11//3//5
-a.jsel = 20//5//10
+
+a.count = 6//10//20
+a.isel = 10//5//11
+a.jsel = 10//10//20
+a.Vrest = 0
 
 var r = (max) =>  Math.floor(Math.random()*max)
 var transpose = require("./transpose.js")
@@ -70,8 +72,13 @@ var init = function(a, drawBool, iHardBool, jHardBool){
 
   var third = Math.floor(count/3)
   connections[third] = [third-1, third+1, third*2]
-  connections[third*2-1] = [third*2-1]
+  connections[third*2-1] = [third*2-2]
   connections[third*2] = [third, third*2+1]
+
+  //Debugging, node sanity check
+  // for (var i = 0; i < count; i++){
+  //   console.log("%c"+connections[i], "color: "+colors[i])
+  // }
 
   for(var i = 2*third; i < count; i++){
     posArr[i][0] = posArr[i-third][0]
@@ -102,35 +109,37 @@ var init = function(a, drawBool, iHardBool, jHardBool){
 
   //current
   IeTrans = transpose(Ie)
-  t = transpose(times)
+  t = transpose(times) //voltage for each node
   if (drawBool){
-        // (canvas, ctx, posArr, colors, connections, rSoma, rDendrite, isel, jsel){
     draw(canvas, ctx, posArr, colors, connections, a.rSoma, a.rDendrite, isel, jsel)
 
-    drawArr(canvas, ctx, IeTrans[isel], "rgba(100,255,150, 0.6)", 10, 5)
-    drawArr(canvas, ctx, IeTrans[jsel], "rgb(100,200,200)", 10, 1)
+    drawArr(canvas, ctx, IeTrans[isel], "rgba(100,255,150, 0.6)", 1, 5)
+    drawArr(canvas, ctx, IeTrans[jsel], "rgb(100,200,200)", 1, 1)
     //voltage for each neuron
     for(var i = 0; i < count; i++){
       drawArr(canvas, ctx, t[i], colors[i], 1, i === 0 ? 5 : 1)
     }
   }
 
-  // drawArr(canvas, ctx, t[0], colors[0], 1, 20)
   return t[0]
 }
 
-init(atmp)
-
+init(atmp, true, true, true)
 function render(){
   if(checkUpdate(a, atmp)){
     atmp = aUpdate(a, atmp)
     ctx.clearRect(0,0, canvas.width, canvas.height)
     var i = init(atmp, false, true, false)
     var j = init(atmp, false, false, true)
+    //f(i) + f(j), red
     var soma_iPj = i.map( (v,k) => v + j[k])
-    drawArr(canvas, ctx, soma_iPj, "rgba(100,200,100, 0.5)", 1, 10)
+    drawArr(canvas, ctx, soma_iPj, "rgba(255,0,0,1)", 1, 3)
+    //f(i+j), green
     var soma_ij = init(atmp, true, true, true)
-    drawArr(canvas, ctx, soma_iPj.map( (v,k) => v - soma_ij[k]), "rgba(100,100,200, 0.5)", 1, 10)
+    drawArr(canvas, ctx, soma_ij, "rgba(0,255,0,1)", 1, 3)
+    //More nonzero means more Nonlinear
+    //black = f(i+j) - (f(i) + f(j))
+    drawArr(canvas, ctx, soma_iPj.map( (v,k) => v - soma_ij[k]), "rgba(0,0,0,1)", 1, 3)
   }
   a.steps = canvas.width
   window.requestAnimationFrame(render)

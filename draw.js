@@ -25,6 +25,8 @@ module.exports = function(canvas, ctx, posArr, colors, connections, rSoma, rDend
       drawLine(canvas, ctx, posArr[i], posArr[j], denSize)
     )
     ctx.fillRect(posArr[i][0], posArr[i][1], denSize, denSize)
+    ctx.fillStyle = "black"
+    ctx.fillText(i, posArr[i][0], posArr[i][1]);
     // ctx.strokeStyle = "black"
     // ctx.lineWidth = 1
     // ctx.strokeRect(posArr[i][0], posArr[i][1], denSize, denSize)

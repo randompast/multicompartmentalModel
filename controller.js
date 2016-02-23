@@ -8,7 +8,7 @@ a = {}
   a.rm = 50
   a.rL = 3
 
-  a.Ie = 20
+  a.Ie = 60
   a.Cm = 2
   a.size = 10
   a.count = 10
