@@ -1,0 +1,18 @@
+{
+  "name": "hh-model",
+  "version": "1.0.0",
+  "description": "",
+  "main": "hh.js",
+  "dependencies": {
+    "canvas-fit": "^1.5.0",
+    "dat-gui": "^0.5.0",
+    "es6-shim": "^0.34.4",
+    "es7-shim": "^5.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "budo --open --live hh.js"
+  },
+  "author": "Michael Kummer <matteroflight@gmail.com>",
+  "license": "ISC"
+}
