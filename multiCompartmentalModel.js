@@ -18,8 +18,8 @@ for (var key in a){
 }
 
 a.count = 6//10//20
-a.isel = 10//5//11
-a.jsel = 10//10//20
+a.isel = 3//5//11
+a.jsel = 5//10//20
 a.Vrest = 0
 
 var r = (max) =>  Math.floor(Math.random()*max)
@@ -37,6 +37,8 @@ var step = require("./step.js")
 var drawArr = require("./drawArr.js")
 var drawLine = require("./drawLine.js")
 var draw = require("./draw.js")
+
+drawGrid = require("./drawGrid.js")
 
 var init = function(a, drawBool, iHardBool, jHardBool){
   var count = Math.max(Math.floor(a.count/3)*3, 6)
@@ -93,11 +95,11 @@ var init = function(a, drawBool, iHardBool, jHardBool){
       if(j === isel
         && a.iBool
         && iHardBool
-        && Math.floor(a.dt*(i)/a.ilength)%2 === 0) Ie[i][j] = a.Ie
+        && Math.floor(a.dt*(i)/a.ilength)%2 === 0) Ie[i][j] += a.Ie
       if(j === jsel
         && a.jBool
         && jHardBool
-        && Math.floor(a.dt*(i + a.jshift)/a.ilength)%2 === 0) Ie[i][j] = a.Ie
+        && Math.floor(a.dt*(i + a.jshift)/a.ilength)%2 === 0) Ie[i][j] += a.Ie
     }
   }
 
@@ -113,8 +115,10 @@ var init = function(a, drawBool, iHardBool, jHardBool){
   if (drawBool){
     draw(canvas, ctx, posArr, colors, connections, a.rSoma, a.rDendrite, isel, jsel)
 
-    drawArr(canvas, ctx, IeTrans[isel], "rgba(100,255,150, 0.6)", 1, 5)
-    drawArr(canvas, ctx, IeTrans[jsel], "rgb(100,200,200)", 1, 1)
+    if(iHardBool)
+      drawArr(canvas, ctx, IeTrans[isel], "rgba(100,255,150, 0.6)", 1, 5)
+    if(jHardBool)
+      drawArr(canvas, ctx, IeTrans[jsel], "rgb(100,200,200)", 1, 1)
     //voltage for each neuron
     for(var i = 0; i < count; i++){
       drawArr(canvas, ctx, t[i], colors[i], 1, i === 0 ? 5 : 1)
@@ -129,6 +133,7 @@ function render(){
   if(checkUpdate(a, atmp)){
     atmp = aUpdate(a, atmp)
     ctx.clearRect(0,0, canvas.width, canvas.height)
+    drawGrid(canvas, ctx)
     var i = init(atmp, false, true, false)
     var j = init(atmp, false, false, true)
     //f(i) + f(j), red
