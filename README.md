@@ -7,7 +7,7 @@ Each node is modeled as an electrical circuit which is an approximation for the 
 
 The following equation (6.29) shows how the voltage is updated (solved for dV) for a node with two neighbors.  Branches and ends would have 3 and 1 nodes respectively.
 
- c_m * dV_u/dt = -i^u_m + I^u_e / A_u + [g_{u,u+1}](https://github.com/randompast/multicompartmentalModel/blob/gh-pages/guu.js) [(V_{u+1} - V_u)](https://github.com/randompast/multicompartmentalModel/blob/gh-pages/guuI.js) + g_{u,u-1}(V_{u+1} - V_u)
+ c_m * dV_u/dt = [-i^u_m](https://github.com/randompast/multicompartmentalModel/blob/gh-pages/dV.js#L7) + I^u_e / [A_u](https://github.com/randompast/multicompartmentalModel/blob/gh-pages/A.js#L3) + [g_{u,u+1}](https://github.com/randompast/multicompartmentalModel/blob/gh-pages/guu.js) [(V_{u+1} - V_u)](https://github.com/randompast/multicompartmentalModel/blob/gh-pages/guuI.js) + g_{u,u-1}(V_{u+1} - V_u)
 
 ## Explaining the Diagram
   * Circle (filled), the cell body, soma
@@ -52,6 +52,7 @@ The following equation (6.29) shows how the voltage is updated (solved for dV) f
 ## Implementation Notes
   * The init function could be cleaned up considerably.
   * Some settings explode the voltage, this could use further checks/exploration.
+  * Units need more precision.
 
 ## License
   * C0, Public Domain.
