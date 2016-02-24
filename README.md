@@ -18,6 +18,7 @@ Exploration of the multicompartmental model inspired by Theoretical Neuroscience
   * jsel, index j selection
   * jBool, whether or not to inject at index j
   * jshift, shift the current of j relative to i
+  * ilength, resize scaling of the current's effect through time
 
 ### Resolution
   * The larger grid is 100*dt (x) by 50mV (y)
